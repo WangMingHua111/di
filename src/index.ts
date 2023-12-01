@@ -66,7 +66,7 @@ export function ResolveDependency<Class extends abstract new (...args: any) => a
  * @param uniqueId 注入依赖的唯一ID
  * @returns InstanceType<Class> | undefined
  */
-export function ResolveDependencyFromUniqueId<Class extends abstract new (...args: any) => any>(uniqueId: string): InstanceType<Class> | undefined {
+export function ResolveDependencyFromUniqueId<Class>(uniqueId: string): Class | undefined {
     return container.get(uniqueId)?.instance()
 }
 
