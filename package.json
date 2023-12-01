@@ -1,0 +1,38 @@
+{
+    "name": "@wangminghua/di",
+    "version": "0.0.1",
+    "description": "typescript dependency injection",
+    "main": "./dist/index.js",
+    "types": "./dist/types/index.d.ts",
+    "scripts": {
+        "build": "rimraf -rf ./dist && npx tsc -p tsconfig.dist.json"
+    },
+    "files": [
+        "src",
+        "dist",
+        "package.json",
+        "tsconfig.dist.json",
+        "tsconfig.json",
+        "README.md"
+    ],
+    "author": "wangminghua",
+    "license": "ISC",
+    "dependencies": {
+        "reflect-metadata": "^0.1.13",
+        "typescript": "^5.2.2"
+    },
+    "devDependencies": {
+        "rimraf": "^5.0.5"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/WangMingHua111/di.git"
+    },
+    "publishConfig": {
+        "access": "public",
+        "registry": "https://registry.npmjs.org/"
+    },
+    "engines": {
+        "node": ">=16"
+    }
+}
