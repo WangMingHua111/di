@@ -1,17 +1,22 @@
 {
     "name": "@wangminghua/di",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "description": "typescript dependency injection",
     "main": "./dist/index.js",
+    "module": "./lib/index.js",
     "types": "./dist/types/index.d.ts",
     "scripts": {
-        "build": "rimraf -rf ./dist && npx tsc -p tsconfig.dist.json"
+        "build": "npm run build-dist && npm run build-lib",
+        "build-dist": "rimraf -rf ./dist && npx tsc -p tsconfig.dist.json",
+        "build-lib": "rimraf -rf ./lib && npx tsc -p tsconfig.lib.json"
     },
     "files": [
         "src",
         "dist",
+        "lib",
         "package.json",
         "tsconfig.dist.json",
+        "tsconfig.lib.json",
         "tsconfig.json",
         "README.md"
     ],
