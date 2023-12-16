@@ -39,7 +39,7 @@ export function GetDependencyContainer(): Map<Function | String, IScopeService> 
 /**
  * 添加依赖
  */
-export function AddDependency(dep: Object, opts?: Pick<DependencyOptions, 'uniqueId' | 'alias'>) {
+export function AddDependency<TObject extends Object>(dep: TObject, opts?: Pick<DependencyOptions, 'uniqueId' | 'alias'>) {
     const { uniqueId, alias = [] } = { ...opts }
     const target: Function = dep.constructor
     // 创建一个单例服务
@@ -49,6 +49,8 @@ export function AddDependency(dep: Object, opts?: Pick<DependencyOptions, 'uniqu
     if (uniqueId) container.set(uniqueId, service)
     alias.push(target)
     alias.forEach((func) => container.set(func, service))
+
+    return dep
 }
 
 /**
