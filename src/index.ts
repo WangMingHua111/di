@@ -35,7 +35,14 @@ type DependencyOptions = {
 export function GetDependencyContainer(): Map<Function | String, IScopeService> {
     return container
 }
-
+/**
+ * 检查依赖是否存在
+ * @param clsOrUniqueId
+ * @returns
+ */
+export function ExistDependency(clsOrUniqueId: Function | String): boolean {
+    return container.has(clsOrUniqueId)
+}
 /**
  * 添加依赖
  */
@@ -64,11 +71,42 @@ export function ResolveDependency<Class extends abstract new (...args: any) => a
 }
 
 /**
+ * 解析依赖，依赖不存在时创建依赖
+ * @param cls 类型
+ * @param opts
+ * @returns InstanceType<Class> | undefined
+ */
+export function ResolveDependencyOrCreate<Class extends abstract new (...args: any) => any>(cls: Class, create: () => InstanceType<Class>, opts?: Pick<DependencyOptions, 'uniqueId' | 'alias'>): InstanceType<Class> {
+    let dep: InstanceType<Class>
+    if (container.has(cls)) {
+        dep = container.get(cls)?.instance()
+    } else {
+        dep = AddDependency(create(), opts)
+    }
+    return dep
+}
+
+/**
  * 解析依赖（从唯一ID）
  * @param uniqueId 注入依赖的唯一ID
  * @returns InstanceType<Class> | undefined
  */
-export function ResolveDependencyFromUniqueId<Class>(uniqueId: string): Class | undefined {
+export function ResolveDependencyFromUniqueId<Class extends Object>(uniqueId: string, create: () => Class, opts?: Pick<DependencyOptions, 'uniqueId' | 'alias'>): Class | undefined {
+    let dep: Class
+    if (container.has(uniqueId)) {
+        dep = container.get(uniqueId)?.instance()
+    } else {
+        dep = AddDependency(create(), opts)
+    }
+    return dep
+}
+
+/**
+ * 解析依赖（从唯一ID），依赖不存在时创建依赖
+ * @param uniqueId 注入依赖的唯一ID
+ * @returns InstanceType<Class> | undefined
+ */
+export function ResolveDependencyFromUniqueIdOrCreate<Class>(uniqueId: string): Class {
     return container.get(uniqueId)?.instance()
 }
 
