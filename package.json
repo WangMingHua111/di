@@ -1,6 +1,6 @@
 {
     "name": "@wangminghua/di",
-    "version": "0.0.4",
+    "version": "0.0.5",
     "description": "typescript dependency injection",
     "main": "./dist/index.js",
     "module": "./lib/index.js",
