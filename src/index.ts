@@ -2,7 +2,10 @@ import 'reflect-metadata'
 import { IScopeService, Lifecycle, SingletonScopeService, TransientScopeService } from './utils/shared'
 
 // 依赖容器
-const container = new Map<Function | String, IScopeService>()
+const container = (function (self: any): Map<Function | String, IScopeService> {
+    const selfcontainer = (self.__di_container__ = new Map<Function | String, IScopeService>())
+    return selfcontainer
+})(globalThis)
 
 /**
  * 依赖配置项
