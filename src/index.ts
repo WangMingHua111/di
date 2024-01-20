@@ -90,11 +90,20 @@ export function ResolveDependencyOrCreate<Class extends abstract new (...args: a
 }
 
 /**
+ * 解析依赖（从唯一ID），依赖不存在时创建依赖
+ * @param uniqueId 注入依赖的唯一ID
+ * @returns InstanceType<Class> | undefined
+ */
+export function ResolveDependencyFromUniqueId<Class>(uniqueId: string): Class {
+    return container.get(uniqueId)?.instance()
+}
+
+/**
  * 解析依赖（从唯一ID）
  * @param uniqueId 注入依赖的唯一ID
  * @returns InstanceType<Class> | undefined
  */
-export function ResolveDependencyFromUniqueId<Class extends Object>(uniqueId: string, create: () => Class, opts?: Pick<DependencyOptions, 'uniqueId' | 'alias'>): Class | undefined {
+export function ResolveDependencyFromUniqueIdOrCreate<Class extends Object>(uniqueId: string, create: () => Class, opts?: Pick<DependencyOptions, 'uniqueId' | 'alias'>): Class | undefined {
     let dep: Class
     if (container.has(uniqueId)) {
         dep = container.get(uniqueId)?.instance()
@@ -102,15 +111,6 @@ export function ResolveDependencyFromUniqueId<Class extends Object>(uniqueId: st
         dep = AddDependency(create(), opts)
     }
     return dep
-}
-
-/**
- * 解析依赖（从唯一ID），依赖不存在时创建依赖
- * @param uniqueId 注入依赖的唯一ID
- * @returns InstanceType<Class> | undefined
- */
-export function ResolveDependencyFromUniqueIdOrCreate<Class>(uniqueId: string): Class {
-    return container.get(uniqueId)?.instance()
 }
 
 /**
